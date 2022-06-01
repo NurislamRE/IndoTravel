@@ -15,14 +15,28 @@ buttons.forEach((btn, index) => {
     });
 });
 
+let opacity = 0;
+const openMenu = () => {
+    nav.style.zIndex = 1;
+    if (opacity < 1) {
+        opacity += .1;
+        setTimeout(function () { openMenu() }, 100);
+    }
+    nav.style.opacity = opacity;
+}
+
+const closeMenu = () => {
+    nav.style.opacity = 0;
+    opacity = 0;
+}
 
 body.addEventListener('click', ({ target }) => {
 
     if (target.classList.contains('header__menu-button')) {
-        nav.classList.toggle('header__menu_active');
+        openMenu();
     }
     else {
         if (!target.classList.contains('header__menu'))
-        nav.classList.remove('header__menu_active');
+        closeMenu();
     }
 });
