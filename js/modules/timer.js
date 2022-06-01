@@ -61,6 +61,7 @@ export const timer = deadline => {
     const getTimeRemaining = () => {
         const dateStop = new Date(deadline).getTime();
         const dateNow = Date.now();
+
         const dateUtc3 = dateNow + (3 * 60 * 60 * 1000); // Время +3 часа
 
         let dateRemaining = dateStop - dateUtc3;
