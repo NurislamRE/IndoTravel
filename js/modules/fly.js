@@ -17,9 +17,8 @@ if (window.screen.width > 758)
 
 let prevScrollPos = 0;
 const calcPositionFly = () => {
-    const maxBottom = docEl.scrollWidth - fly.clientHeight;
+    const maxBottom = docEl.clientHeight - fly.clientHeight;
     const maxScroll = docEl.scrollHeight - docEl.clientHeight;
-
     const percentScroll = (window.pageYOffset * 100) / maxScroll;
     
     //Повернуть самолет
@@ -34,5 +33,6 @@ const calcPositionFly = () => {
     const bottom = maxBottom * (percentScroll / 100);
     fly.style.bottom = bottom + 'px';
 };
+
 
 window.addEventListener('scroll', calcPositionFly);
