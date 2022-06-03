@@ -1,7 +1,4 @@
-const getData = async () => {
-    return await fetch('https://bfs01.getcourse.ru/public/files/251231/195/cbe21783a515f15b9fc7c49f727da123.json?e=1654235999&s=37FM6DeqjanGVvMUZPTuKw');
-};
-const result = await getData();
+const result = await fetch('https://bfs01.getcourse.ru/public/files/251231/195/cbe21783a515f15b9fc7c49f727da123.json?e=1654235999&s=37FM6DeqjanGVvMUZPTuKw');
 const data = await result.json();
 
 const tourForm = document.querySelector('.tour__form');
