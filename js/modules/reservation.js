@@ -1,3 +1,5 @@
+import showModal from './modal.js';
+
 const sendData = bodyData => {
     fetch('https://jsonplaceholder.typicode.com/posts', {
         method: 'POST',
@@ -12,7 +14,15 @@ const sendData = bodyData => {
         }
         throw new Error('Ошибка, Что-то не так!');
     })
-    .then((json) => alert('отправка прошла успешно!'))
+    .then((json) => {
+        document.querySelector('#reservation__date').setAttribute('disabled','disabled');
+        document.querySelector('#reservation__people').setAttribute('disabled','disabled');
+        document.querySelector('#reservation__name').setAttribute('disabled','disabled');
+        document.querySelector('#reservation__phone').setAttribute('disabled','disabled');
+        document.querySelector('#reservation__phone').setAttribute('disabled','disabled');
+        document.querySelector('.reservation__button').setAttribute('disabled','disabled');
+        return alert(`отправка прошла успешно, ответ от сервера: ${json}`);
+    })
     .catch((error) => {
         alert(`Отправка не удалось, причина: ${error}`);
     });
@@ -51,14 +61,9 @@ const sendDataEmail = bodyData => {
 const reservationForm = document.querySelector('.reservation__form');
 reservationForm.addEventListener('submit', e => {
     e.preventDefault();
-    const formBody = {
-        dates: reservationForm.dates.value,
-        people: reservationForm.people.value,
-        reservationName: reservationForm.reservationName.value,
-        reservationPhone: reservationForm.reservationPhone.value,
-    };
-    
-    sendData(formBody);
+    const formBody = Object.fromEntries(new FormData(e.target));
+    formBody.reservationPrice = document.querySelector('.reservation__price').textContent;
+    showModal(formBody);
 });
 
 const footerForm = document.querySelector('.footer__form');
@@ -70,3 +75,5 @@ footerForm.addEventListener('submit', e => {
 
     sendDataEmail(formBody);
 });
+
+export default sendData;
