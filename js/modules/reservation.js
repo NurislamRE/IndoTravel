@@ -1,6 +1,7 @@
 import showModal from './modal.js';
 
 const sendData = bodyData => {
+    const serverResult = document.querySelector('#serverResult');
     fetch('https://jsonplaceholder.typicode.com/posts', {
         method: 'POST',
         body: JSON.stringify(bodyData),
@@ -21,10 +22,10 @@ const sendData = bodyData => {
         document.querySelector('#reservation__phone').setAttribute('disabled','disabled');
         document.querySelector('#reservation__phone').setAttribute('disabled','disabled');
         document.querySelector('.reservation__button').setAttribute('disabled','disabled');
-        return alert(`отправка прошла успешно, ответ от сервера: ${json}`);
+        serverResult.textContent = 'отправка прошла успешно!';
     })
     .catch((error) => {
-        alert(`Отправка не удалось, причина: ${error}`);
+        serverResult.textContent = 'Отправка не удалось!';
     });
 };
 
@@ -54,7 +55,7 @@ const sendDataEmail = bodyData => {
 
     })
     .catch((error) => {
-        alert(`Отправка не удалось, причина: ${error}`);
+        alert('Отправка не удалось!');
     });
 };
 
@@ -63,7 +64,30 @@ reservationForm.addEventListener('submit', e => {
     e.preventDefault();
     const formBody = Object.fromEntries(new FormData(e.target));
     formBody.reservationPrice = document.querySelector('.reservation__price').textContent;
-    showModal(formBody);
+
+    const regExp = /[А-Я а-я]{3,}/;
+    if (regExp.test(formBody.reservationName))
+        showModal(formBody);
+    else alert('ФИО должен быть не менее 3 букв');
+});
+
+reservationForm.reservationName.addEventListener('input', () => {
+    reservationForm.reservationName.value = reservationForm.reservationName.value.replace(/[^А-Я а-я]/g, '');
+});
+
+reservationForm.reservationPhone.addEventListener('input', () => {
+    let regexp;
+    if (reservationForm.reservationPhone.value.length === 1) 
+        regexp = /^\+/g;
+    else if (reservationForm.reservationPhone.value.length > 1) 
+        regexp = /^\+[0-9]+/;
+    
+    if (!regexp.test(reservationForm.reservationPhone.value)) 
+        reservationForm.reservationPhone.value = reservationForm.reservationPhone.value.slice(0, reservationForm.reservationPhone.value.length - 1);
+    
+
+    const match = reservationForm.reservationPhone.value.match(regexp);
+    reservationForm.reservationPhone.value=match[0];
 });
 
 const footerForm = document.querySelector('.footer__form');

@@ -37,7 +37,7 @@ const showModal = async (data) => {
         overlay.remove();
     });
 
-    btnEdit.classList.add('modal__btn_edit');
+    btnEdit.classList.add('modal__btn_edit','modal__btn');
     btnEdit.textContent = 'Изменить данные';
 
     overlay.append(modalWindow);
